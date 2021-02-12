@@ -1,0 +1,52 @@
+<canvas id="main" width=800 height=800>
+</canvas>
+
+<script src="evalf.js"></script>
+<script>
+    var canvas = document.getElementById("main");
+    var ctx = canvas.getContext("2d");
+
+    function drawIterations(init_input,n) {
+        var input = init_input;
+        //draw grid
+        var width = canvas.width;
+        var height = canvas.height;
+        var len = input.length;
+        var cellwidth = width/len;
+        var cellheight = height/n;
+        
+        if(cellwidth < 1) {
+        	canvas.width = len;
+        	cellwidth = 1;
+        }
+        if(cellheight < 1) {
+        	canvas.height = n;
+        	cellheight = 1;
+        }
+
+        for(var i=0;i<=len;i++) {
+            ctx.moveTo(cellwidth*i, 0);
+            ctx.lineTo(cellwidth*i, height);
+        }
+        for(var i=0;i<=n;i++) {
+            ctx.moveTo(0, cellheight*i);
+            ctx.lineTo(width, cellheight*i);
+        }
+        ctx.stroke();
+
+        //fill the grid
+        for(var i=0;i<=n;i++) {
+            for(var j=0;j<len;j++)
+                if(input[j]=="1")
+                    ctx.fillRect(j*cellwidth, i*cellheight, cellwidth, cellheight);
+            input = evalinput(input);
+        }
+    }
+
+    var input ="0".repeat(10)+"10";
+    //var input = "00100010010";
+
+    drawIterations(input, input.length-1);
+
+
+</script>
