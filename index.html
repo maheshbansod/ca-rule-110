@@ -6,7 +6,7 @@
     var canvas = document.getElementById("main");
     var ctx = canvas.getContext("2d");
 
-    function drawIterations(init_input,n) {
+    function drawTriangleIterations(init_input,n) {
         var input = init_input;
         //draw grid
         var width = canvas.width;
@@ -42,11 +42,67 @@
             input = evalinput(input);
         }
     }
-
-    var input ="0".repeat(10)+"10";
+    
+    function drawOneInput(init_input, n) {
+    	var input = init_input;
+    	
+    	var width = canvas.width;
+    	var height = canvas.height;
+    	var len = input.length;
+    	var cellwidth = width/len;
+    	var cellheight = cellwidth;
+    	var showgrid = true;
+    	
+    	ctx.fillStyle = '#ffffff';
+    	ctx.fillRect(0,0,width, cellheight);
+    	
+    	if(cellwidth <= 1) {
+    		canvas.width = len;
+    		cellwidth = 1;
+    		showgrid = false;
+    	}
+    	
+    	if(showgrid) {
+    		for(var i=0;i<=len;i++) {
+    			ctx.moveTo(cellwidth*i, 0);
+    			ctx.lineTo(cellwidth*i, cellheight);
+    		}
+    		ctx.moveTo(0,0);
+    		ctx.lineTo(width,0);
+    		ctx.moveTo(0,cellheight);
+    		ctx.lineTo(width, cellheight);
+    		ctx.stroke();
+    	}
+    	
+    	ctx.fillStyle = '#000';
+    	for(var j=0;j<len;j++) {
+    		if(input[j]=="1")
+    			ctx.fillRect(j*cellwidth, 0, cellwidth, cellheight);
+    	}
+    }
+    
+    var input ="0".repeat(1000)+"10";
     //var input = "00100010010";
+    let start=0;
+    function iterationStep(timestamp) {
+    
+    	const time_interval = 50;
+    	const elapsed = timestamp - start;
+    	
+    	if(elapsed > time_interval) {
+    		start = timestamp;
+    		input = evalinput(input);
+    		//console.log(input);
+    		drawOneInput(input, input.length-1)
+    	}
+    	
+    	window.requestAnimationFrame(iterationStep);
+    }
 
-    drawIterations(input, input.length-1);
+
+    //drawTriangleIterations(input, input.length-1);
+    drawOneInput(input, input.length-1);
+    window.requestAnimationFrame(iterationStep);
 
 
 </script>
