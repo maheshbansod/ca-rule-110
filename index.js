@@ -38,7 +38,8 @@ const randomizerButton =  /** @type {HTMLButtonElement} */ (document.getElementB
 randomizerButton.addEventListener('click', e => {
   e.preventDefault();
   const inputLen =  /** @type {HTMLInputElement} */(document.getElementById('randomizer-input')).valueAsNumber;
-  const s = generateBinaryString(inputLen);
+  const isSparse = /** @type {HTMLInputElement} */(document.querySelector('input[name="randomizer-is-sparse"]:checked')).value === "sparse";
+  const s = generateBinaryString(inputLen, isSparse);
    /** @type {HTMLInputElement} */(document.getElementById('input')).value = s;
 });
 
@@ -170,15 +171,22 @@ function iterationStep(timestamp) {
 
 /**
  * @param {number} n
- * */
-function generateBinaryString(n) {
+ * @param {boolean} isSparse
+ */
+function generateBinaryString(n, isSparse) {
   if (n <= 0) {
     return "";
   }
   let result = "";
   for (let i = 0; i < n; i++) {
-    result += Math.round(Math.random());
+    if (isSparse) {
+      result += Math.round(Math.random() * 4) === 0 ? "1" : "0"; // ~20% chance of being 1
+    } else {
+      result += Math.round(Math.random());
+    }
   }
+  const oneCount = result.split('').map(Number).reduce((acc, current) => acc + current, 0);
+  console.log("number of 1s", oneCount, " / ", n, " i.e. ", oneCount / n);
   return result;
 }
 

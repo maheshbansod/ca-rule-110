@@ -15,13 +15,6 @@
         </legend>
         <label for="input">Initial input</label>
         <input type="text" id="input" value="0010001001" pattern="[01]+" required />
-        <fieldset>
-          <legend>
-            <small>Generate random of length</small>
-          </legend>
-          <input type="number" value="500" id="randomizer-input" placeholder="Input length e.g. 50" required/>
-          <button type="button" id="randomize-input-btn" title="Randomize input">🎲</button>
-        </fieldset>
         <div class="container" data-light-switch-show-if="animMode.singleLine">
           <label for="speed">Speed</label>
           <input type="range" id="speed" min="0" max="1000" value="500" />
@@ -38,6 +31,20 @@
         <button type="submit" id="ca-animate-single-line-btn" data-light-switch-show-if="animMode.singleLine" class="end-btn">
           Animate Single line
         </button>
+      </fieldset>
+
+      <fieldset class="container">
+        <legend>
+          <small>Generate random of length</small>
+        </legend>
+        <input type="number" value="500" id="randomizer-input" placeholder="Input length e.g. 50" required/>
+        <div class="p-1">
+          <label for="randomizer-is-sparse-dense">Dense</label>
+          <input type="radio" id="randomizer-is-sparse-dense" name="randomizer-is-sparse" value="dense" selected />
+          <label for="randomizer-is-sparse-sparse">Sparse</label>
+          <input type="radio" id="randomizer-is-sparse-sparse" name="randomizer-is-sparse" value="sparse" />
+        </div>
+        <button type="button" id="randomize-input-btn" title="Randomize input">🎲</button>
       </fieldset>
     </form>
   </div>
@@ -57,6 +64,10 @@
   .container {
     display: flex;
     align-items:center;
+  }
+  .p-1 {
+    margin: 0.25rem;
+    padding: 0.25rem;
   }
 </style>
 
