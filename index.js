@@ -3,6 +3,10 @@ import { evalinput } from "./evalf.js";
 
 const showFullBtn = /** @type {HTMLButtonElement} */ (document.getElementById("ca-full-btn"));
 let clearPrevious = () => { };
+const shouldShowGrid = () => {
+  const showGridCheckbox =/** @type {HTMLInputElement}*/(document.getElementById("show-grid-checkbox"));
+  return showGridCheckbox.checked;
+};
 showFullBtn.addEventListener('click', (e) => {
   e.preventDefault();
   clearPrevious();
@@ -58,6 +62,7 @@ function drawTriangleIterations(init_input, n) {
   const len = input.length;
   let cellwidth = width / len;
   let cellheight = height / n;
+  const shouldShowGridLines = shouldShowGrid();
 
   console.log(width, height);
   ctx.clearRect(0, 0, width, height);
@@ -71,16 +76,18 @@ function drawTriangleIterations(init_input, n) {
     cellheight = 1;
   }
 
-  ctx.beginPath();
-  for (let i = 0; i <= len; i++) {
-    ctx.moveTo(cellwidth * i, 0);
-    ctx.lineTo(cellwidth * i, height);
+  if (shouldShowGridLines) {
+    ctx.beginPath();
+    for (let i = 0; i <= len; i++) {
+      ctx.moveTo(cellwidth * i, 0);
+      ctx.lineTo(cellwidth * i, height);
+    }
+    for (let i = 0; i <= n; i++) {
+      ctx.moveTo(0, cellheight * i);
+      ctx.lineTo(width, cellheight * i);
+    }
+    ctx.stroke();
   }
-  for (let i = 0; i <= n; i++) {
-    ctx.moveTo(0, cellheight * i);
-    ctx.lineTo(width, cellheight * i);
-  }
-  ctx.stroke();
 
   //fill the grid
   for (let i = 0; i <= n; i++) {
@@ -105,7 +112,7 @@ function drawOneInput(init_input, _n) {
   var len = input.length;
   var cellwidth = width / len;
   var cellheight = cellwidth;
-  var showgrid = true;
+  var showgrid = shouldShowGrid();
 
   ctx.clearRect(0, 0, width, cellheight);
 

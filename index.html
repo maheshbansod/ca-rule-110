@@ -25,6 +25,8 @@
           x
           <input type="number" size="3" placeholder="Height of the canvas" id="resize-canvas-height" value="800"/>
         </div>
+        <input type="checkbox" id="show-grid-checkbox" checked />
+        <label for="show-grid-checkbox">Show grid</label>
         <button type="submit" id="ca-full-btn" data-light-switch-show-if="animMode.full" class="end-btn">
           Full
         </button>
@@ -40,7 +42,7 @@
         <input type="number" value="500" id="randomizer-input" placeholder="Input length e.g. 50" required/>
         <div class="p-1">
           <label for="randomizer-is-sparse-dense">Dense</label>
-          <input type="radio" id="randomizer-is-sparse-dense" name="randomizer-is-sparse" value="dense" selected />
+          <input type="radio" id="randomizer-is-sparse-dense" name="randomizer-is-sparse" value="dense" checked />
           <label for="randomizer-is-sparse-sparse">Sparse</label>
           <input type="radio" id="randomizer-is-sparse-sparse" name="randomizer-is-sparse" value="sparse" />
         </div>
